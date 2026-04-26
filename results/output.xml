@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.12.3 on linux)" generated="2026-04-21T22:19:37.940563" rpa="false" schemaversion="5">
+<suite id="s1" name="Api" source="/home/dwhitte7/nv-air-lab/tests/api.robot">
+<test id="s1-t1" name="Health Check Works" line="9">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.060509" level="INFO">Creating Session using : alias=api, url=http://127.0.0.1:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-04-21T22:19:38.060376" elapsed="0.000335"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.068779" level="INFO">GET Request : url=http://127.0.0.1:8000/health 
+ path_url=/health 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:38.068863" level="INFO">GET Response : url=http://127.0.0.1:8000/health 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:38 GMT', 'server': 'uvicorn', 'content-length': '15', 'content-type': 'application/json'} 
+ body={"status":"ok"} 
+ </msg>
+<msg time="2026-04-21T22:19:38.068963" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/health</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.060844" elapsed="0.008135"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.069159" elapsed="0.000182"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.069854" level="INFO">${body} = {'status': 'ok'}</msg>
+<var>${body}</var>
+<arg>${resp.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.069450" elapsed="0.000420"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${body}[status]</arg>
+<arg>ok</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.069980" elapsed="0.000210"/>
+</kw>
+<status status="PASS" start="2026-04-21T22:19:38.059830" elapsed="0.010462"/>
+</test>
+<test id="s1-t2" name="Get Existing Item" line="16">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.070738" level="INFO">Creating Session using : alias=api, url=http://127.0.0.1:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-04-21T22:19:38.070667" elapsed="0.000323"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.073120" level="INFO">GET Request : url=http://127.0.0.1:8000/items/1 
+ path_url=/items/1 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:38.073163" level="INFO">GET Response : url=http://127.0.0.1:8000/items/1 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:38 GMT', 'server': 'uvicorn', 'content-length': '43', 'content-type': 'application/json'} 
+ body={"id":1,"name":"switch-a","status":"ready"} 
+ </msg>
+<msg time="2026-04-21T22:19:38.073235" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/items/1</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.071134" elapsed="0.002116"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.073426" elapsed="0.000132"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.074120" level="INFO">${body} = {'id': 1, 'name': 'switch-a', 'status': 'ready'}</msg>
+<var>${body}</var>
+<arg>${resp.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.073685" elapsed="0.000452"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.074416" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${body}[id]</arg>
+<arg>1</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.074250" elapsed="0.000204"/>
+</kw>
+<status status="PASS" start="2026-04-21T22:19:38.070482" elapsed="0.004076"/>
+</test>
+<test id="s1-t3" name="Get Missing Item" line="23">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.074984" level="INFO">Creating Session using : alias=api, url=http://127.0.0.1:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-04-21T22:19:38.074911" elapsed="0.000164"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.077134" level="INFO">GET Request : url=http://127.0.0.1:8000/items/999 
+ path_url=/items/999 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:38.077185" level="INFO">GET Response : url=http://127.0.0.1:8000/items/999 
+ status=404, reason=Not Found 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:38 GMT', 'server': 'uvicorn', 'content-length': '27', 'content-type': 'application/json'} 
+ body={"detail":"Item not found"} 
+ </msg>
+<msg time="2026-04-21T22:19:38.077261" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/items/999</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.075199" elapsed="0.002076"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.077879" level="INFO">${body} = {'detail': 'Item not found'}</msg>
+<var>${body}</var>
+<arg>${resp.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.077432" elapsed="0.000465"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${body}[detail]</arg>
+<arg>Item not found</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.078039" elapsed="0.000190"/>
+</kw>
+<status status="PASS" start="2026-04-21T22:19:38.074736" elapsed="0.003590"/>
+</test>
+<test id="s1-t4" name="Create And Poll Job" line="29">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.078777" level="INFO">Creating Session using : alias=api, url=http://127.0.0.1:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-04-21T22:19:38.078701" elapsed="0.000164"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.079315" level="INFO">${payload} = {'task': 'simulate-topology'}</msg>
+<var>${payload}</var>
+<arg>task=simulate-topology</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.078969" elapsed="0.000361"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.081353" level="INFO">POST Request : url=http://127.0.0.1:8000/jobs 
+ path_url=/jobs 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"task": "simulate-topology"}' 
+ </msg>
+<msg time="2026-04-21T22:19:38.081398" level="INFO">POST Response : url=http://127.0.0.1:8000/jobs 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:38 GMT', 'server': 'uvicorn', 'content-length': '66', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","state":"queued"} 
+ </msg>
+<msg time="2026-04-21T22:19:38.081466" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/jobs</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.079435" elapsed="0.002046"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.081612" elapsed="0.000122"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.082198" level="INFO">${job} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'state': 'queued'}</msg>
+<var>${job}</var>
+<arg>${resp.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.081834" elapsed="0.000380"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.082476" level="INFO">${job_id} = 182ebed9-1dc9-4716-8d1a-34def15ba49c</msg>
+<var>${job_id}</var>
+<arg>${job}[job_id]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.082313" elapsed="0.000177"/>
+</kw>
+<for flavor="IN RANGE">
+<iter>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:38.084513" level="INFO">GET Request : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ path_url=/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:38.084556" level="INFO">GET Response : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:38 GMT', 'server': 'uvicorn', 'content-length': '94', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","task":"simulate-topology","state":"running"} 
+ </msg>
+<msg time="2026-04-21T22:19:38.084618" level="INFO">${poll} = &lt;Response [200]&gt;</msg>
+<var>${poll}</var>
+<arg>api</arg>
+<arg>/jobs/${job_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.082871" elapsed="0.001762"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:38.085074" level="INFO">${body} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'task': 'simulate-topology', 'state': 'running'}</msg>
+<var>${body}</var>
+<arg>${poll.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.084712" elapsed="0.000377"/>
+</kw>
+<kw name="Exit For Loop If" owner="BuiltIn">
+<arg>'${body}[state]' == 'completed'</arg>
+<doc>Stops executing the enclosing FOR loop if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.085145" elapsed="0.000237"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-04-21T22:19:39.085768" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-04-21T22:19:38.085446" elapsed="1.000406"/>
+</kw>
+<var name="${i}">0</var>
+<status status="PASS" start="2026-04-21T22:19:38.082820" elapsed="1.003063"/>
+</iter>
+<iter>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:39.087801" level="INFO">GET Request : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ path_url=/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:39.087840" level="INFO">GET Response : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:39 GMT', 'server': 'uvicorn', 'content-length': '94', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","task":"simulate-topology","state":"running"} 
+ </msg>
+<msg time="2026-04-21T22:19:39.087907" level="INFO">${poll} = &lt;Response [200]&gt;</msg>
+<var>${poll}</var>
+<arg>api</arg>
+<arg>/jobs/${job_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:39.086050" elapsed="0.001871"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:39.088389" level="INFO">${body} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'task': 'simulate-topology', 'state': 'running'}</msg>
+<var>${body}</var>
+<arg>${poll.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:39.087997" elapsed="0.000408"/>
+</kw>
+<kw name="Exit For Loop If" owner="BuiltIn">
+<arg>'${body}[state]' == 'completed'</arg>
+<doc>Stops executing the enclosing FOR loop if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-04-21T22:19:39.088469" elapsed="0.000236"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-04-21T22:19:40.089008" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-04-21T22:19:39.088757" elapsed="1.000339"/>
+</kw>
+<var name="${i}">1</var>
+<status status="PASS" start="2026-04-21T22:19:39.085984" elapsed="1.003145"/>
+</iter>
+<iter>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:40.091058" level="INFO">GET Request : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ path_url=/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:40.091137" level="INFO">GET Response : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:40 GMT', 'server': 'uvicorn', 'content-length': '94', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","task":"simulate-topology","state":"running"} 
+ </msg>
+<msg time="2026-04-21T22:19:40.091211" level="INFO">${poll} = &lt;Response [200]&gt;</msg>
+<var>${poll}</var>
+<arg>api</arg>
+<arg>/jobs/${job_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:40.089297" elapsed="0.001928"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:40.091706" level="INFO">${body} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'task': 'simulate-topology', 'state': 'running'}</msg>
+<var>${body}</var>
+<arg>${poll.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:40.091303" elapsed="0.000417"/>
+</kw>
+<kw name="Exit For Loop If" owner="BuiltIn">
+<arg>'${body}[state]' == 'completed'</arg>
+<doc>Stops executing the enclosing FOR loop if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-04-21T22:19:40.091785" elapsed="0.000204"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-04-21T22:19:41.092288" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-04-21T22:19:40.092038" elapsed="1.000401"/>
+</kw>
+<var name="${i}">2</var>
+<status status="PASS" start="2026-04-21T22:19:40.089223" elapsed="1.003255"/>
+</iter>
+<iter>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:41.094456" level="INFO">GET Request : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ path_url=/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:41.094502" level="INFO">GET Response : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:41 GMT', 'server': 'uvicorn', 'content-length': '94', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","task":"simulate-topology","state":"running"} 
+ </msg>
+<msg time="2026-04-21T22:19:41.094579" level="INFO">${poll} = &lt;Response [200]&gt;</msg>
+<var>${poll}</var>
+<arg>api</arg>
+<arg>/jobs/${job_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:41.092658" elapsed="0.001936"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:41.095119" level="INFO">${body} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'task': 'simulate-topology', 'state': 'running'}</msg>
+<var>${body}</var>
+<arg>${poll.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:41.094682" elapsed="0.000460"/>
+</kw>
+<kw name="Exit For Loop If" owner="BuiltIn">
+<arg>'${body}[state]' == 'completed'</arg>
+<doc>Stops executing the enclosing FOR loop if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-04-21T22:19:41.095205" elapsed="0.000219"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-04-21T22:19:42.095752" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-04-21T22:19:41.095483" elapsed="1.000367"/>
+</kw>
+<var name="${i}">3</var>
+<status status="PASS" start="2026-04-21T22:19:41.092582" elapsed="1.003301"/>
+</iter>
+<iter>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:42.097982" level="INFO">GET Request : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ path_url=/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:42.098044" level="INFO">GET Response : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:42 GMT', 'server': 'uvicorn', 'content-length': '94', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","task":"simulate-topology","state":"running"} 
+ </msg>
+<msg time="2026-04-21T22:19:42.098139" level="INFO">${poll} = &lt;Response [200]&gt;</msg>
+<var>${poll}</var>
+<arg>api</arg>
+<arg>/jobs/${job_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:42.096082" elapsed="0.002079"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:42.098677" level="INFO">${body} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'task': 'simulate-topology', 'state': 'running'}</msg>
+<var>${body}</var>
+<arg>${poll.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:42.098264" elapsed="0.000444"/>
+</kw>
+<kw name="Exit For Loop If" owner="BuiltIn">
+<arg>'${body}[state]' == 'completed'</arg>
+<doc>Stops executing the enclosing FOR loop if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-04-21T22:19:42.098806" elapsed="0.000220"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-04-21T22:19:43.099665" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-04-21T22:19:42.099335" elapsed="1.000426"/>
+</kw>
+<var name="${i}">4</var>
+<status status="PASS" start="2026-04-21T22:19:42.095987" elapsed="1.003818"/>
+</iter>
+<iter>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-04-21T22:19:43.102157" level="INFO">GET Request : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ path_url=/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-04-21T22:19:43.102214" level="INFO">GET Response : url=http://127.0.0.1:8000/jobs/182ebed9-1dc9-4716-8d1a-34def15ba49c 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 22 Apr 2026 02:19:43 GMT', 'server': 'uvicorn', 'content-length': '96', 'content-type': 'application/json'} 
+ body={"job_id":"182ebed9-1dc9-4716-8d1a-34def15ba49c","task":"simulate-topology","state":"completed"} 
+ </msg>
+<msg time="2026-04-21T22:19:43.102328" level="INFO">${poll} = &lt;Response [200]&gt;</msg>
+<var>${poll}</var>
+<arg>api</arg>
+<arg>/jobs/${job_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-21T22:19:43.100009" elapsed="0.002342"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-21T22:19:43.102979" level="INFO">${body} = {'job_id': '182ebed9-1dc9-4716-8d1a-34def15ba49c', 'task': 'simulate-topology', 'state': 'completed'}</msg>
+<var>${body}</var>
+<arg>${poll.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-21T22:19:43.102461" elapsed="0.000538"/>
+</kw>
+<kw name="Exit For Loop If" owner="BuiltIn">
+<msg time="2026-04-21T22:19:43.103811" level="INFO">Exiting for loop altogether.</msg>
+<arg>'${body}[state]' == 'completed'</arg>
+<doc>Stops executing the enclosing FOR loop if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-04-21T22:19:43.103484" elapsed="0.000384"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2026-04-21T22:19:43.103945" elapsed="0.000015"/>
+</kw>
+<var name="${i}">5</var>
+<status status="PASS" start="2026-04-21T22:19:43.099923" elapsed="0.004055"/>
+</iter>
+<var>${i}</var>
+<value>10</value>
+<status status="PASS" start="2026-04-21T22:19:38.082571" elapsed="5.021430"/>
+</for>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${body}[state]</arg>
+<arg>completed</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-04-21T22:19:43.104146" elapsed="0.000571"/>
+</kw>
+<status status="PASS" start="2026-04-21T22:19:38.078504" elapsed="5.026344"/>
+</test>
+<status status="PASS" start="2026-04-21T22:19:37.941185" elapsed="5.164021"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Api" id="s1" pass="4" fail="0" skip="0">Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
